@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Feuerwehrfest Frage</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#ffd6d6,#fff5e6);
+}
+.card{
+  width:min(90vw,520px);
+  background:white;
+  border-radius:24px;
+  padding:32px;
+  text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+}
+h1{
+  margin-top:0;
+  font-size:1.8rem;
+  color:#333;
+}
+.buttons{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:26px;
+}
+button{
+  border:none;
+  border-radius:14px;
+  padding:14px 24px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+  box-shadow:0 6px 14px rgba(0,0,0,0.12);
+}
+button:hover{transform:translateY(-2px)}
+
+.yes{background:#e53935;color:white}
+.no{background:#555;color:white}
+.maybe{background:#ff9800;color:white}
+
+.result{
+  margin-top:28px;
+  min-height:120px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.emoji{
+  font-size:4rem;
+  margin-bottom:10px;
+}
+.message{
+  font-size:1.1rem;
+  color:#444;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h1>Sehen wir uns beim Feuerwehrfest in Geilenkhausen am 4.7.2026?</h1>
+
+<div class="buttons">
+<button class="yes" onclick="showResult('yes')">Ja 🚒</button>
+<button class="maybe" onclick="showResult('maybe')">Vielleicht 👨‍🚒</button>
+</div>
+
+<div class="result" id="result">
+<div class="message">Wähle eine Antwort 🔥</div>
+</div>
+</div>
+
+<script>
+function showResult(choice){
+ const result=document.getElementById('result');
+
+ if(choice==='yes'){
+  result.innerHTML=`
+   <div class="emoji">🚒🔥</div>
+   <div class="message">Super! Dann sehen wir uns beim Feuerwehrfest!</div>
+  `;
+ }
+ 
+ else if(choice==='maybe'){
+  result.innerHTML=`
+   <div class="emoji">👨‍🚒😉</div>
+   <div class="message">Du meinst doch eigentlich ja, oder?</div>
+  `;
+ }
+
+ createFireworks();
+}
+
+function createFireworks(){
+  for(let i=0;i<18;i++){
+    const firework=document.createElement('div');
+    firework.textContent=['🎆','✨','🎇','🔥'][Math.floor(Math.random()*4)];
+    firework.style.position='fixed';
+    firework.style.left=Math.random()*100+'vw';
+    firework.style.top=(15 + Math.random()*70)+'vh';
+    firework.style.fontSize=(28 + Math.random()*34)+'px';
+    firework.style.pointerEvents='none';
+    firework.style.zIndex='9999';
+    firework.style.opacity='1';
+    firework.style.transition='transform 1s ease-out, opacity 1s ease-out';
+    document.body.appendChild(firework);
+
+    requestAnimationFrame(() => {
+      firework.style.transform=`translateY(${(Math.random()*120-60)}px) scale(1.8)`;
+      firework.style.opacity='0';
+    });
+
+    setTimeout(() => firework.remove(), 1100);
+  }
+}
+</script>
+
+</body>
+</html>
